@@ -21,9 +21,17 @@ export const createTask = asyncWrapper(async (req, res) => {
   res.status(201).json({ task });
 });
 
-export const updateTask = asyncWrapper(async (req, res) => {
+export const updateTask = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params;
   const { name, completed } = req.body;
+
+  if (name === "") {
+    return next(createCustomError("A name must be provided!", 401));
+  } else if (name.length > 20) {
+    return next(
+      createCustomError("A name cannot be longer than 20 characters", 401)
+    );
+  }
 
   const task = await Task.findOneAndUpdate(
     { _id: taskID },
@@ -33,13 +41,14 @@ export const updateTask = asyncWrapper(async (req, res) => {
       runValidators: true,
     }
   );
+
   if (!task) {
     return next(createCustomError(`No task for id: ${taskID}`, 404));
   }
   res.status(200).json({ task });
 });
 
-export const deleteTask = asyncWrapper(async (req, res) => {
+export const deleteTask = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params;
   const task = await Task.findOneAndDelete({ _id: taskID });
   if (!task) {
