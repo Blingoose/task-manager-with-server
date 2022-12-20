@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8000;
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
-    let server = express();
+    const server = express();
 
     // Application-level middleware functions
     server.use(express.static("./public"));
