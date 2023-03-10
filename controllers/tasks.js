@@ -27,9 +27,9 @@ export const updateTask = asyncWrapper(async (req, res, next) => {
 
   if (name === "") {
     return next(createCustomError("A name must be provided!", 401));
-  } else if (name.length > 20) {
+  } else if (name.length > 40) {
     return next(
-      createCustomError("A name cannot be longer than 20 characters", 401)
+      createCustomError("A name cannot be longer than 40 characters", 401)
     );
   }
 
