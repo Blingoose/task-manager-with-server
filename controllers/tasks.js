@@ -1,4 +1,4 @@
-import { Task } from "../models/tasks.js";
+import { Task } from "../models/Tasks.js";
 import { asyncWrapper } from "../middleware/async.js";
 import { createCustomError } from "../errors/custom-error.js";
 
