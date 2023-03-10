@@ -11,7 +11,8 @@ export const getOne = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params;
   const task = await Task.findOne({ _id: taskID });
   if (!task) {
-    return next(createCustomError(`No task for id: ${taskID}`, 404));
+    createCustomError(`No task for id: ${taskID}`, 404);
+    return;
   }
   res.status(200).json({ task });
 });
@@ -26,11 +27,11 @@ export const updateTask = asyncWrapper(async (req, res, next) => {
   const { name, completed } = req.body;
 
   if (name === "") {
-    return next(createCustomError("A name must be provided!", 401));
+    createCustomError("A name must be provided!", 401);
+    return;
   } else if (name.length > 40) {
-    return next(
-      createCustomError("A name cannot be longer than 40 characters", 401)
-    );
+    createCustomError("A name cannot be longer than 40 characters", 401);
+    return;
   }
 
   const task = await Task.findOneAndUpdate(
@@ -43,7 +44,8 @@ export const updateTask = asyncWrapper(async (req, res, next) => {
   );
 
   if (!task) {
-    return next(createCustomError(`No task for id: ${taskID}`, 404));
+    createCustomError(`No task for id: ${taskID}`, 404);
+    return;
   }
   res.status(200).json({ task });
 });
@@ -52,7 +54,8 @@ export const deleteTask = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params;
   const task = await Task.findOneAndDelete({ _id: taskID });
   if (!task) {
-    return next(createCustomError(`No task for id: ${taskID}`, 404));
+    createCustomError(`No task for id: ${taskID}`, 404);
+    return;
   }
   res.status(200).json({ deleted: task });
 });
