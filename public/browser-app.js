@@ -78,8 +78,7 @@ formDOM.addEventListener("submit", async (e) => {
     formAlertDOM.classList.add("text-success");
   } catch (error) {
     formAlertDOM.style.display = "block";
-    formAlertDOM.innerHTML = error.msg;
-    console.log(error);
+    formAlertDOM.innerHTML = error.response.data.msg;
   }
   setTimeout(() => {
     formAlertDOM.style.display = "none";
