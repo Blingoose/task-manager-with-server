@@ -17,7 +17,13 @@ export const getOne = asyncWrapper(async (req, res, next) => {
 });
 
 export const createTask = asyncWrapper(async (req, res) => {
-  const task = await Task.create(req.body);
+  const { name } = req.body;
+  if (name === "") {
+    throw createCustomError("A name must be provided!", 401);
+  } else if (name.length > 40) {
+    throw createCustomError("A name cannot be longer than 40 characters", 401);
+  }
+  const task = await Task.create({ name });
   res.status(201).json({ task });
 });
 
