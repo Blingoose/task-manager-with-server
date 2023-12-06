@@ -5,15 +5,17 @@ import { connectDB } from "./db/connect.js";
 import dotenv from "dotenv";
 import { notFound } from "./middleware/not-found.js";
 import { errorHandlerMiddleware } from "./middleware/error-handler.js";
+import cors from "cors";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
-
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
     const server = express();
+    server.set("trust proxy", 1);
+    server.use(cors());
 
     // Application-level middleware functions
     server.use(express.static("./public"));
