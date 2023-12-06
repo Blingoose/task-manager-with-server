@@ -15,7 +15,13 @@ const start = async () => {
     await connectDB(process.env.MONGO_URI);
     const server = express();
     server.set("trust proxy", 1);
-    server.use(cors());
+    server.use(
+      cors({
+        origin: "https://b5d4c777.task-manager-with-server.pages.dev",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        credentials: true,
+      })
+    );
 
     // Application-level middleware functions
     server.use(express.static("./public"));
