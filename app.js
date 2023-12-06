@@ -17,7 +17,7 @@ const start = async () => {
     server.set("trust proxy", 1);
     server.use(
       cors({
-        origin: "https://b5d4c777.task-manager-with-server.pages.dev",
+        origin: "https://blingoose.net",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true,
       })
