@@ -10,11 +10,13 @@ import cors from "cors";
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
+
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
     const server = express();
     server.set("trust proxy", 1);
+
     server.use(
       cors({
         origin: "https://blingoose.net",
@@ -26,6 +28,12 @@ const start = async () => {
     // Application-level middleware functions
     server.use(express.static("./public"));
     server.use(express.json());
+
+    // Middleware to set proper Content-Type for JavaScript files
+    server.use("/api/browser-app.js", (req, res, next) => {
+      res.type("application/javascript");
+      next();
+    });
 
     // Route-specific middleware functions
     server.use("/api/v1/tasks", tasks);
