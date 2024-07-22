@@ -1,4 +1,4 @@
-# task_manager_with_server
+# task-manager-with-server
 
 ## Link to view the project: https://task-manager-myxm.onrender.com/index.html
 
